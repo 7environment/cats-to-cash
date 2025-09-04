@@ -75,20 +75,3 @@ local PickUpToggle = MainTab:CreateToggle({
         end
     end,
 })
-
-local autobuy = false
-local BuyToggle = MainTab:CreateToggle({
-    Name = "Autobuy upgrades",
-    CurrentValue = false,
-    Flag = "Toggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(Value)
-        autobuy = Value
-        while autobuy do
-            for _, land in ipairs(Area.Lands:GetChildren()) do
-                print(land.Name)
-                task.wait(1)
-            end
-            task.wait()
-        end
-    end,
-})
