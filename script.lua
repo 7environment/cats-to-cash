@@ -105,7 +105,7 @@ local BuyToggle = MainTab:CreateToggle({
 
 local autobuylocation = false
 local BuyLocToggle = MainTab:CreateToggle({
-    Name = "Autobuy new location",
+    Name = "Autobuy new location (broken)",
     CurrentValue = false,
     Flag = "Toggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
@@ -142,6 +142,20 @@ local ClickCatToggle = MainTab:CreateToggle({
                     end
                 end
             end
+            task.wait()
+        end
+    end,
+})
+
+local autowish = false
+local AutoWishToggle = MainTab:CreateToggle({
+    Name = "Autowish",
+    CurrentValue = false,
+    Flag = "Toggle5", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        autowish = Value
+        while autowish do
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("WishWell"):WaitForChild("RequestWish"):FireServer()
             task.wait()
         end
     end,
