@@ -76,17 +76,71 @@ local PickUpToggle = MainTab:CreateToggle({
     end,
 })
 
-local autobuy = false
+local autobuyupgrades = false
 local BuyToggle = MainTab:CreateToggle({
     Name = "Autobuy upgrades",
     CurrentValue = false,
     Flag = "Toggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
-        autobuy = Value
-        while autobuy do
+        autobuyupgrades = Value
+        while autobuyupgrades do
             for _, land in ipairs(Area.Lands:GetChildren()) do
-                print(land.Name)
-                task.wait(1)
+                local args = {
+                    "BuxLevel",
+                    land.Name
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Upgrade"):FireServer(unpack(args))
+                task.wait(.5)
+                local args = {
+                    "MainLevel",
+                    land.Name
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Upgrade"):FireServer(unpack(args))
+                task.wait(.5)
+            end
+            task.wait()
+        end
+    end,
+})
+
+local autobuylocation = false
+local Toggle = Tab:CreateToggle({
+    Name = "Autobuy new location",
+    CurrentValue = false,
+    Flag = "Toggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        autobuylocation = Value
+        while autobuylocation do
+            local args = {
+	            "2"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("BuyArea"):FireServer(unpack(args))
+            task.wait()
+        end
+    end,
+})
+
+local autoclickcats = false
+local Toggle = Tab:CreateToggle({
+    Name = "Auto click cats",
+    CurrentValue = false,
+    Flag = "Toggle4", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        autoclickcats = Value
+        while autoclickcats do
+            for _, land in ipairs(Area.Lands:GetChildren()) do
+                for _, cat in ipairs(land.CatFolder:GetChildren()) do
+                    fire = false
+                    for _, v in ipairs(cat:GetChildren()) do
+                        if tostring(v) == "Base" then
+                            fire = true
+                        end
+                    end
+                    if fire then
+                        fireclickdetector(cat.Base.ClickDetector)
+                        task.wait()
+                    end
+                end
             end
             task.wait()
         end
