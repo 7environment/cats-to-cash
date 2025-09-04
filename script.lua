@@ -104,7 +104,7 @@ local BuyToggle = MainTab:CreateToggle({
 })
 
 local autobuylocation = false
-local Toggle = Tab:CreateToggle({
+local BuyLocToggle = MainTab:CreateToggle({
     Name = "Autobuy new location",
     CurrentValue = false,
     Flag = "Toggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -121,7 +121,7 @@ local Toggle = Tab:CreateToggle({
 })
 
 local autoclickcats = false
-local Toggle = Tab:CreateToggle({
+local ClickCatToggle = MainTab:CreateToggle({
     Name = "Auto click cats",
     CurrentValue = false,
     Flag = "Toggle4", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
